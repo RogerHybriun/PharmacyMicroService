@@ -14,6 +14,27 @@ message Pharmacy {
   string closeTime = 11;
 }
 
+message Product {
+  string id = 1;
+  string name = 3;
+  uint32 price = 4;
+}
+
+message PharmacyWithProducts {
+  string id = 1;
+  string isSubsidiaryOf = 2;
+  string logo = 3;
+  string name = 4;
+  string contactPhone = 5;
+  string documentNumber = 6;
+  string city = 7;
+  string street = 8;
+  string number = 9;
+  string openTime = 10;
+  string closeTime = 11;
+  repeated Product products = 12;
+}
+
 message PharmacyList {
   uint64 count = 1;
   repeated Pharmacy pharmacies = 2;
@@ -37,6 +58,11 @@ message ListAllPharmaciesParamsDTO {
   uint32 pageSize = 2;
 }
 
+message LinkProductsDTO {
+  string pharmacyId = 1;
+  repeated string productIds = 2;
+}
+
 message PharmacyId {
   string id = 1;
 }
@@ -45,8 +71,9 @@ message Void {}
 
 service PharmacyService {
   rpc listAllPharmacies(ListAllPharmaciesParamsDTO) returns (PharmacyList);
-  rpc showPharmacy(PharmacyId) returns (Pharmacy);
+  rpc showPharmacy(PharmacyId) returns (PharmacyWithProducts);
   rpc createPharmacy(NonGeneratedPharmacyDTO) returns (Pharmacy);
   rpc updatePharmacy(Pharmacy) returns (Pharmacy);
   rpc deletePharmacy(PharmacyId) returns (Void);
+  rpc linkProductsToPharmacy(LinkProductsDTO) returns (PharmacyWithProducts);
 }

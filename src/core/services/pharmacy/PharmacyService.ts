@@ -1,13 +1,22 @@
 import { IPharmacyRepository } from "../../repositories/pharmacy/IPharmacyRepository";
-import { PharmacyDTO, paginationOptions, PharmacyList } from "../../types";
+import { PharmacyProductsRepository } from "../../repositories/pharmacyProducts/PharmacyProductsRepository";
+import {
+  PharmacyDTO,
+  paginationOptions,
+  PharmacyWithProducts,
+} from "../../types";
 import { IPharmacyService } from "./IPharmacyService";
 import { Validator } from "../../../utils/validator";
+import { ProductClient } from "../../gateways/Product";
+import { IPharmacyProductsRepository } from "../../repositories/pharmacyProducts/IPharmacyProductsRepository";
 
 export class PharmacyService implements IPharmacyService {
   private validator;
+  private pharmacyProductsRepository: IPharmacyProductsRepository;
 
   constructor(private pharmacyRepository: IPharmacyRepository) {
     this.validator = new Validator();
+    this.pharmacyProductsRepository = new PharmacyProductsRepository();
   }
 
   create = async (pharmacyData: PharmacyDTO) => {
@@ -48,5 +57,17 @@ export class PharmacyService implements IPharmacyService {
     if (!pharmacy) return new Error("Pharmacy not found");
 
     await this.pharmacyRepository.delete(pharmacy.id);
+  };
+  linkProductsToPharmacy = async (pharmacyId: string, productIds: string[]) => {
+    const pharmacy = await this.pharmacyRepository.findById(pharmacyId);
+
+    if (!pharmacy) return new Error("Pharmacy not found");
+
+    this.pharmacyProductsRepository.linkProductsToPharmacy(
+      pharmacyId,
+      productIds
+    );
+
+    return await this.pharmacyRepository.findById(pharmacyId);
   };
 }

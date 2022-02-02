@@ -51,4 +51,12 @@ export class PharmacyController implements IPharmacyController {
 
     return callback(null, null);
   };
+  linkProductsToPharmacy = async (
+    call: Record<string, any>,
+    callback: Callback
+  ) => {
+    const { pharmacyId, productIds } = call.request;
+
+    await this.pharmacyService.linkProductsToPharmacy(pharmacyId, productIds);
+  };
 }

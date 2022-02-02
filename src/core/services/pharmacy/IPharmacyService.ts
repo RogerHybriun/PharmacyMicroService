@@ -3,6 +3,7 @@ import {
   Pharmacy,
   PharmacyDTO,
   PharmacyList,
+  PharmacyWithProducts,
 } from "../../types";
 
 export interface IPharmacyService {
@@ -14,4 +15,8 @@ export interface IPharmacyService {
   ) => Promise<Pharmacy | Error>;
   show: (pharmacyId: string) => Promise<Pharmacy | Error>;
   delete: (pharmacyId: string) => Promise<void | Error>;
+  linkProductsToPharmacy: (
+    pharmacyId: string,
+    productIds: Array<string>
+  ) => Promise<PharmacyWithProducts | Error>;
 }
