@@ -63,7 +63,7 @@ message ListAllPharmaciesParamsDTO {
   uint32 pageSize = 2;
 }
 
-message PharmacyId {
+message IdOnly {
   string id = 1;
 }
 
@@ -76,9 +76,10 @@ message Void {}
 
 service PharmacyService {
   rpc listAllPharmacies(ListAllPharmaciesParamsDTO) returns (PharmacyList);
-  rpc showPharmacy(PharmacyId) returns (PharmacyWithProducts);
+  rpc showPharmacy(IdOnly) returns (PharmacyWithProducts);
   rpc createPharmacy(NonGeneratedPharmacyDTO) returns (Pharmacy);
   rpc updatePharmacy(Pharmacy) returns (Pharmacy);
-  rpc deletePharmacy(PharmacyId) returns (Void);
+  rpc deletePharmacy(IdOnly) returns (Void);
   rpc linkProductsToPharmacy(LinkProductsToPharmacyDTO) returns (PharmacyWithProducts);
+  rpc unlinkProductFromAllPharmacies(IdOnly) returns (Void);
 }
