@@ -153,4 +153,9 @@ export class PharmacyService implements IPharmacyService {
       })),
     };
   };
+  unlinkProductFromAllPharmacies = async (productId: string) => {
+    await this.pharmacyProductsRepository.unlinkProductFromAllPharmacies(
+      productId
+    );
+  };
 }
