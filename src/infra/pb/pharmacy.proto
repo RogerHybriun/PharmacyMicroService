@@ -27,7 +27,7 @@ message Product {
 
 message PharmacyWithProducts {
   string id = 1;
-  string isSubsidiaryOf = 2;
+  Pharmacy isSubsidiaryOf = 2;
   string logo = 3;
   string name = 4;
   string contactPhone = 5;
@@ -46,7 +46,7 @@ message PharmacyList {
 }
 
 message NonGeneratedPharmacyDTO {
-  string issubsidiaryOf = 1;
+  string isSubsidiaryOf = 1;
   string logo = 2;
   string name = 3;
   string contactPhone = 4;
